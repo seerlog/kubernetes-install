@@ -36,10 +36,10 @@ echo '======== [8] 쿠버네티스 패키지 설치 ========'
 sudo yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes
 sudo systemctl enable --now kubelet
 
-echo '======== [9] kubeadm 으로 클러스터 Join ========'
 sudo sed -i 's/disabled/# disabled/g' /etc/containerd/config.toml
 sudo systemctl restart containerd
 
+echo '======== [9] kubeadm 으로 클러스터 Join ========'
 # ip, token, hash 수정 필요
 sudo kubeadm join 10.178.0.2:6443 --token 3xpw3n.ydw0g2bunj86qvht --discovery-token-ca-cert-hash sha256:19ef1195dd4d149c5fdb01a782afb99ea930b59f0f5b0cf7b0674f3c72e78299
 
