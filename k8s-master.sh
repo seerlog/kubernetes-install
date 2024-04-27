@@ -41,7 +41,7 @@ sudo sed -i 's/disabled/# disabled/g' /etc/containerd/config.toml
 sudo systemctl restart containerd
 
 # apiserver-advertise-address 를 서버 ip로 설정 필요
-kubeadm init --pod-network-cidr=10.244.0.0/16 --apiserver-advertise-address 10.178.0.2
+sudo kubeadm init --pod-network-cidr=10.244.0.0/16 --apiserver-advertise-address 10.178.0.2
 
 mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
