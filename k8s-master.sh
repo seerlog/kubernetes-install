@@ -47,6 +47,7 @@ mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
+echo '======== [10] calico 설치 ========'
 kubectl apply -f https://calico-v3-25.netlify.app/archive/v3.25/manifests/calico.yaml
 
 echo '======== [COMPLETE] ========'
