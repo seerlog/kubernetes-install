@@ -51,7 +51,3 @@ echo '======== [10] calico 설치 ========'
 kubectl apply -f https://calico-v3-25.netlify.app/archive/v3.25/manifests/calico.yaml
 
 echo '======== [COMPLETE] ========'
-
-# kubeadm token list
-# openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed "s/^.* //"
-# kubeadm token list 에서 토큰 안보이면 kubeadm token create 로 토큰생성
