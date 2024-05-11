@@ -1,8 +1,10 @@
 echo ‘======== [CentOS 8] Kubernetes Master Insall Start ========’ 
 
 echo '======== [0] 설정 변수 초기화 ========'
-server_ip=$(hostname -I)
+server_ip=$(hostname -I | cut -d' ' -f1)
 pod_network=10.244.0.0/16
+echo 'server_ip :' $server_ip
+echo 'pod_network :' $pod_network
 
 echo '======== [1] 패키지 업데이트 ========'
 sudo yum -y update
