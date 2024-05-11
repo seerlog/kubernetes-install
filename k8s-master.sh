@@ -46,7 +46,6 @@ echo '======== [9] kubeadm 으로 클러스터 생성 ========'
 sudo sed -i 's/disabled/# disabled/g' /etc/containerd/config.toml
 sudo systemctl restart containerd
 
-# apiserver-advertise-address 를 서버 ip로 설정 필요
 sudo kubeadm init --pod-network-cidr=$pod_network --apiserver-advertise-address $server_ip
 
 mkdir -p $HOME/.kube
@@ -57,7 +56,7 @@ echo '======== [10] calico 설치 ========'
 kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.27.3/manifests/tigera-operator.yaml
 
 curl https://raw.githubusercontent.com/projectcalico/calico/v3.27.3/manifests/custom-resources.yaml -O
-sudo sed -i "s|cidr: *.*.*.*/*|cidr: $pod_network|g" ~/custom-resources.yaml
+sudo sed -i "s|cidr: *.*.*.*/*|cidr: $pod_network|g" custom-resources.yaml
 kubectl create -f custom-resources.yaml
 
 echo '======== [COMPLETE] ========'
