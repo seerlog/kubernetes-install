@@ -1,5 +1,9 @@
 echo ‘======== [CentOS 8] Kubernetes Master Insall Start ========’ 
 
+echo '======== [0] 설정 변수 초기화 ========'
+server_ip=$(hostname -I)
+pod_network=10.244.0.0/16
+
 echo '======== [1] 패키지 업데이트 ========'
 sudo yum -y update
 
@@ -41,13 +45,17 @@ sudo sed -i 's/disabled/# disabled/g' /etc/containerd/config.toml
 sudo systemctl restart containerd
 
 # apiserver-advertise-address 를 서버 ip로 설정 필요
-sudo kubeadm init --pod-network-cidr=10.244.0.0/16 --apiserver-advertise-address 10.178.0.2
+sudo kubeadm init --pod-network-cidr=$pod_network --apiserver-advertise-address $server_ip
 
 mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
 echo '======== [10] calico 설치 ========'
-kubectl apply -f https://calico-v3-25.netlify.app/archive/v3.25/manifests/calico.yaml
+kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.27.3/manifests/tigera-operator.yaml
+
+curl https://raw.githubusercontent.com/projectcalico/calico/v3.27.3/manifests/custom-resources.yaml -O
+sudo sed -i "s|cidr: *.*.*.*/*|cidr: $pod_network|g" ~/custom-resources.yaml
+kubectl create -f custom-resources.yaml
 
 echo '======== [COMPLETE] ========'
